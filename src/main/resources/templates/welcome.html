@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base th:href="${  #httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() }"/>
+    <title th:text="#{page.title.system}"></title>
+    <link type="text/css"  rel="stylesheet"  th:href="@{/lib/bootstrap-4.3.1-dist/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/lib/jQuery/jQuery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/popper/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-4.3.1-dist/js/bootstrap.min.js}"></script>
+</head>
+<style>
+
+</style>
+<body >
+    <h1>Welcome!!!</h1>
+    <span  th:text="#{page.title.system}"></span>
+</body>
+</html>

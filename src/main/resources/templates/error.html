@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base th:href="${  #httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() }"/>
+    <title th:text="#{page.title.system}"></title>
+    <link type="text/css"  rel="stylesheet"  th:href="@{/lib/bootstrap-4.3.1-dist/css/bootstrap.css}">
+    <link type="text/css"  rel="stylesheet"  th:href="@{/lib/bootoast-master/dist/bootoast.min.css}">
+    <script type="text/javascript" th:src="@{/lib/jQuery/jQuery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-4.3.1-dist/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootoast-master/dist/bootoast.min.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+            var proverbArr = [
+                "人非圣贤，孰能无过",
+                "有错能改，善莫大焉",
+                "塞翁失马，焉知非福",
+                "放下屠刀，立地成佛",
+                "大吉大利，今晚吃鸡",
+                "我说我不是bug，你信吗",
+                "天气不错，适合报错",
+                "请连续按F13三下，原地爆炸",
+                "请连续按F12四次，有惊喜哦",
+                "恭喜中奖，再来一次",
+                "FBI WARNING",
+                "<img style='border-radius: 40px;'" +
+                    "src='https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=cce6eaa9bd3533faf5b6942890e89a22/3c6d55fbb2fb4316b81c19dd2ca4462309f7d312.jpg'>",
+                "当你凝视异常，异常也在凝视着你",
+                "将错就错，大错特错",
+                "此树是我栽，此页是你开，要从这里过，网费交上来",
+                "条条大路通罗马，所以罗马堵车了",
+                "老铁，你又回来了",
+                "好久不见，甚是想念",
+                "欢迎来到召唤师峡谷",
+                "系统崩溃，请重启你的人生",
+                "",
+            ];
+            var ranNum =  Math.floor( Math.random() * proverbArr.length )  ;
+            var proverb = proverbArr[ ranNum ];
+            if( ranNum !== 11 ){
+                proverb = "<span id=\"spanProverb\" style=\"color: red;font-size: 14px;  \">" + proverb ;
+                proverb = proverb + "</span>";
+            }
+            $("#divProverb").empty();
+            $("#divProverb").append( proverb );
+        });
+    </script>
+</head>
+<body background="/images/bg_index2.jpg"  style="margin:0;padding:0;">
+
+    <div style="
+        width: 100%;height:100%;
+        background: rgba(0, 0, 0, 0.69);
+        overflow-y: hidden; overflow-x: hidden;
+        border: 1px solid green;
+        position:fixed;
+        text-align:center;
+        padding-top: 350px;">
+            <h1><span style="color: red; "> Error </span></h1><br>
+            <div id="divProverb"></div>
+    </div>
+
+
+</body>
+</html>

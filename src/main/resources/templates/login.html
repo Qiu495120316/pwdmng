@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base th:href="${  #httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() }"/>
+    <title th:text="#{page.title.system}"></title>
+    <link type="text/css"  rel="stylesheet"  th:href="@{/lib/bootstrap-4.3.1-dist/css/bootstrap.css}">
+    <link type="text/css"  rel="stylesheet"  th:href="@{/lib/bootoast-master/dist/bootoast.min.css}">
+    <script type="text/javascript" th:src="@{/lib/jQuery/jQuery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/jQuery/jquery.md5.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-4.3.1-dist/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootoast-master/dist/bootoast.min.js}"></script>
+    <script type="text/javascript">
+
+        var localhostPath = getLocalhostPath();
+
+        document.onkeydown = function (event) {
+            var e = event || window.event;
+            if (e && e.keyCode == 13) { //回车键的键值为13
+                doSubmit(); //调用登录按钮的登录事件
+            }
+        };
+
+        $('#txtPassword').bind('keyup', function(event) {
+            if (event.keyCode == "13") {
+                //回车执行查询
+                doSubmit();
+            }
+        });
+
+        function doSubmit(){
+            var dto = {
+                loginName: $.trim( $('#txtLoginName').val() ) ,
+                password:  $.md5( $('#txtPassword').val() ) ,
+            };
+            $.ajax({
+                url: localhostPath+ '/user/login',
+                method: 'POST',
+                contentType : 'application/json',
+                data:  JSON.stringify(dto),
+                async: false,
+                success: function ( result ) {
+                    var data = JSON.parse( result );
+                    showToast( data.status , data.message );
+                    if( "101" == data.status ){
+                            setTimeout( function () {
+                                window.location.href = "/home";
+                        }, 500 );
+                    }else{
+                        setTimeout( function(){ closeToast(); }, 2500 );
+                    }
+                },
+                error : function ( error ) {
+                    showToast( 102 , JSON.stringify(error) );
+                    $('#txtLoginName').val("");
+                    $('#txtPassword').val("");
+                    setTimeout( function(){ closeToast(); }, 5000 );
+                }
+            });
+        }
+
+        function getLocalhostPath(){
+            var curWwwPath = window.document.location.href;
+            var pathname= window.document.location.pathname;
+            var pos = curWwwPath.indexOf(pathname);
+            return curWwwPath .substring(0,pos);
+        }
+
+         function showToast( status, message ){
+            var alertCls = "alert alert-primary";
+             switch ( status ){
+                 case 101 :
+                     alertCls = "alert alert-success";
+                     break;
+                 case 102 :
+                     alertCls = "alert alert-danger";
+                     break;
+             }
+             $("#divAlert").empty();
+            var alertHTML = "<div id='msgAlert' class='"+alertCls+"' role='alert'>"+ message +"</div>";
+            $("#divAlert").append(  alertHTML );
+            $("#msgAlert").alert();
+        }
+
+        function closeToast(){
+            $("#divAlert").empty();
+            $("#divAlert").append(  "<br><br>" );
+        }
+
+        function clearUserName(){
+            $('#txtLoginName').val("");
+        }
+
+        function clearPassword(){
+            $('#txtPassword').val("");
+        }
+    </script>
+</head>
+<style>
+
+</style>
+<body background="/images/bg_index2.jpg" >
+
+        <div style="width: 100%; background: rgba(0, 0, 0, 0.35); overflow-y: hidden; overflow-x: hidden;">
+
+            <div class="row" style="padding-top: 200px ;">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div id="divAlert">
+                        <br><br><br>
+                    </div>
+                    <div class="card"  style=" background: rgba(0, 0, 0, 0.35);">
+                        <div class="card-header" >
+                            <span th:text="#{page.title.login}" style="color: #fff;"></span>
+                            <div style="float: right;">
+                                <a th:href="@{/?lang=zh_CN}"><span th:text="#{page.link.i18n.chinese}"></span></a>/
+                                <a th:href="@{/?lang=en_US}"> <span th:text="#{page.link.i18n.english}"></span></a>/
+                                <a th:href="@{/}">博客</a>
+                            </div>
+                        </div>
+                        <div class="card-body"  style=" background: rgba(0, 0, 0, 0.25); color: rgb( 255,255,255) ; padding-left: 36%; padding-right: 36%;">
+                            <form id="loginForm" action="/login" role="form">
+                                <div class="form-group " style="width: 100%;">
+                                    <label for="txtLoginName"> 用户名：</label>
+                                    <div class="input-group">
+                                        <input id="txtLoginName"
+                                               type="text"
+                                               class="form-control"
+                                               name="loginName"
+                                               tabindex="1"
+                                                maxlength="15">
+                                        <div class="input-group-append ">
+                                            <button class="btn btn-outline-light active" type="button" onclick="clearUserName()">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="width: 100%;margin-top: 20px;">
+                                    <label for="txtPassword"> 密码：</label>
+                                    <div class="input-group">
+                                        <input id="txtPassword"
+                                               type="password"
+                                               class="form-control"
+                                               name="password"
+                                               tabindex="2"
+                                               maxlength="15">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-light active" type="button" onclick="clearPassword()">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check" style="width: 100%;margin-top: 10px;">
+                                    <input id="cbRememberPwd" type="checkbox" class="form-check-input" >
+                                    <label class="form-check-label" for="cbRememberPwd">记住密码</label>
+                                </div>
+                                <button
+                                        id="btnLogin"
+                                        type="button"
+                                        class="btn btn-info"
+                                        onclick="doSubmit()"
+                                        style="width: 100%;margin-top: 50px;" tabindex="3">
+                                    登录</button>
+                                <!-- <button  type="button" class="btn btn-warning" onclick="doSubmit()"
+                                     style="width: 100%;margin-top: 10px;" tabindex="4">
+                                     注册</button>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <div class="row" style="margin-top: 200px;">
+                <div class="col-md-5"></div>
+                <div class="col-md-2" style="text-align:center">
+                    <a href="http://www.beian.miit.gov.cn" style="color: white;text-decoration: underline;">
+                        粤ICP备19077556号-1</a>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+
+            <div class="row" style="padding-bottom: 19px;">
+                <div class="col-md-5"></div>
+                <div class="col-md-2" style="text-align:center">
+                    <span style="color: white; font-size: 12px;">© 2019 qzj.</span>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

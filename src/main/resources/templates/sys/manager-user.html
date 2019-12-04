@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${  #httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() }"/>
+    <meta charset="UTF-8">
+    <title th:text="#{page.title.system}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap-4.3.1-dist/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{lib/bootstrap-table-master/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap-table-master/dist/bootstrap-table.min.css}"/>
+    <script type="text/javascript" th:src="@{/lib/jQuery/jQuery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/popper.js/dist/umd/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-4.3.1-dist/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-table-master/dist/bootstrap-table.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib\bootstrap-table-master/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.js}"></script>
+
+    <script>
+
+    </script>
+    <style>
+        .table.table-bordered > tr >td {
+            height: 40px;
+            max-height: 40px;
+        }
+        .table{
+            table-layout: fixed;
+        }
+        .table_list_box{
+            table-layout:fixed !important;
+        }
+    </style>
+</head>
+<body>
+
+    <table id="tableUser"  data-toggle="table" style="height: 500px;"></table>
+
+    <div id="toolbar">
+        <button class="btn btn-warning">
+            删除
+        </button>
+        <button class="btn btn-primary">
+            新增
+        </button>
+    </div>
+
+
+    <script>
+
+        var h = $(window).height() - 100;
+
+        $('#tableUser').bootstrapTable("destroy").bootstrapTable({
+            toolbar: '#toolbar',
+            url: '/user/search',
+            method: 'POST',
+            sidePagination: "true",
+            sidePagination: 'server',
+            queryParamsType : 'limit',
+            height:h,
+            queryParams: function (params) {
+                var queryObj = {
+                    rows: params.limit,                         //页面大小
+                    page: (params.offset / params.limit) + 1,   //页码
+                    sort: params.sort,      //排序列名
+                    sortOrder: params.order, //排位命令（desc，asc）
+                    search: params.search
+                }
+               return JSON.stringify(queryObj);
+            },
+            search: true,//是否搜索
+            pagination: true, // 是否分页
+            pageSize: 30,
+            pageList: [ 10,30,50,100 ],
+            paginationVAlign: 'bottom',
+            striped: true, // 是否显示行间隔色
+            sortable: true, // 是否启用排序
+            searchOnEnterKey: true,
+            fixedColumns: true, //启用表头固定
+            fixedNumber: 5, //固定列数
+            clickToSelect: true, //启用复选列
+            checkboxHeader: false,
+            columns: [
+                {
+                    checkbox: true
+                },
+                {
+                    field: '',
+                    title: '序号',
+                    formatter : indexFormatter
+                },
+                {
+                    field: 'loginName',
+                    title: '登陆名',
+                    sortable: true
+                },
+                {
+                    field: 'isAdmin',
+                    title: '是否为管理员',
+                    sortable: true,
+                    formatter : booleanFormatter
+                },
+                {
+                    field: 'lastUpdateDate',
+                    title: '更新时间',
+                    sortable: true,
+                    formatter: dateFormatter
+                },
+                {
+                    field: '',
+                    title: '操作',
+                    formatter: operateFormatter
+                }
+            ]
+        }).bootstrapTable('resetView');
+
+        function indexFormatter( value , row , index ){
+            return index + 1;
+        }
+
+        function booleanFormatter( value ,row ,index ){
+            return "Y" == value ? "是" : "否";
+        }
+
+        function dateFormatter( value ,row ,index ){
+            value = new Date( value );
+            var year = value.getFullYear();
+            var month = value.getMonth() + 1 < 10 ? "0" + (value.getMonth() + 1) : value.getMonth() + 1;
+            var date = value.getDate() < 10 ? "0" + value.getDate() : value.getDate();
+            var hour = value.getHours()< 10 ? "0" + value.getHours() : value.getHours();
+            var minute = value.getMinutes()< 10 ? "0" + value.getMinutes() : value.getMinutes();
+            var second = value.getSeconds()< 10 ? "0" + value.getSeconds() : value.getSeconds();
+            return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+        }
+
+        function operateFormatter( value , row , index ){
+            return "<a href=\"#\">编辑</a><a href=\"#\">删除</a>";
+        }
+
+        $(window).resize(function () {
+            $('#tableUser').bootstrapTable('resetView');
+        });
+    </script>
+
+</body>
+</html>
