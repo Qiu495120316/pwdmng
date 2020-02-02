@@ -1,9 +1,13 @@
 package com.zjqiu.pwdmng.entity.dto;
 
+import lombok.Data;
+
+@Data
 public class MenuDto {
 
     private Long menuId;
     private String menuName;
+    private Integer level;
     private boolean enable;
 
     public MenuDto(){}
@@ -11,29 +15,4 @@ public class MenuDto {
         this.enable = enable;
     }
 
-
-
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
 }

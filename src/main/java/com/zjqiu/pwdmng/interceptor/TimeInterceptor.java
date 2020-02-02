@@ -1,5 +1,6 @@
 package com.zjqiu.pwdmng.interceptor;
 
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -33,8 +34,14 @@ public class TimeInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        String methodName = ((HandlerMethod) o).getMethod().getName();
-        this.end=System.currentTimeMillis();
-        log.info(methodName+"方法执行了："+(this.end-this.start)+"毫秒");
+        String methodName = null;
+        if( !o.getClass().getName().equals("org.springframework.web.servlet.resource.ResourceHttpRequestHandler") ){
+            methodName = ((HandlerMethod) o).getMethod().getName();
+        }
+        if( !Strings.isNullOrEmpty( methodName ) ){
+            this.end=System.currentTimeMillis();
+            log.info(methodName+"方法执行了："+(this.end-this.start)+"毫秒");
+        }
+
     }
 }

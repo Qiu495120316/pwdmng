@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base th:href="${  #httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() }"/>
+    <title th:text="#{page.title.system}"></title>
+    <link rel="stylesheet"  th:href="@{/lib/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet"  th:href="@{/lib/bootstrap-submenu-3.0.0/css/bootstrap-submenu.css}">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.css}">
+    <script type="text/javascript" th:src="@{/lib/jQuery/jQuery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{lib/popper.js/dist/umd/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootoast-master/dist/bootoast.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-submenu-3.0.0/js/bootstrap-submenu.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Base.js}"></script>
+
+    <script type="text/javascript">
+
+        var localhostPath = getLocalhostPath();
+
+        function openSubWeb( path ){
+            $('#ifmMain').attr('src', path);
+            $('.dropdown-submenu').submenupicker();
+        }
+
+        $("#ifmMain").load(function () {
+            var myiframeH = $(this).contents().find("body").height() + 30;
+            $(this).height(myiframeH);
+        });
+
+        function logout(){
+            var question = confirm("确认要退出账号吗?
+            if( question || question === 'true' ){
+                console.log( localhostPath+ '/user/logout' );
+                $.ajax({
+                    url: localhostPath+ '/user/logout',
+                    method: 'POST',
+                    contentType : 'application/json',
+                    success: function ( result ) {
+                        window.location.href = "/";
+                    },
+                    error : function ( error ) {
+                        window.location.href = "/";
+                    }
+                });
+            }
+        }
+
+    </script>
+    <style>
+        html,body { height: 100%;margin: 0; padding: 0;}
+        .submenu-tag{}
+    </style>
+</head>
+<body background="/images/bg_index2.jpg"  style="overflow-y: hidden; ">
+
+
+    <div style="height: 100%; background: rgba(0, 0, 0, 0.28); padding: 1%;">
+
+        <nav class="navbar navbar-expand-lg bg-light">
+            <ul class="navbar-nav">
+                <button type="button" onclick="logout()" class="btn btn-warning" style="margin-right: 10px;">
+                    <i class="fa fa-power-off"></i>
+                </button>
+
+                <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+                    <img style="width: 20px; height: 18px; " src="/images/icon_user_default.png"/>
+                </button>
+
+                <div class="dropdown" style="margin-right: 10px;">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        Setting
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/home?lang=zh_CN">中文</a>
+                        <a class="dropdown-item" href="/home?lang=en_US">English</a>
+                        <div class="dropdown-container">
+                            <a class="dropdown-item" href="/home?lang=zh_CN">12123</a>
+                            <a class="dropdown-item" href="/home?lang=en_US">1312313</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-default" type="button" data-toggle="dropdown">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a tabindex="0">Action</a></li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="0" data-toggle="dropdown">二级菜单</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">Dropdown header</li>
+                                <li><a tabindex="0">二级菜单项</a></li>
+                                <li class="disabled"><a tabindex="0">二级菜单项</a></li>
+                                <li><a tabindex="0">二级菜单项</a></li>
+                            </ul>
+                        </li>
+                        <li><a tabindex="0">一级菜单项</a></li>
+                        <li class="divider"></li>
+                        <li><a tabindex="0">一级菜单项</a></li>
+                    </ul>
+                </div>
+
+
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a tabindex="0">Action</a></li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">More options</a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="0">Action</a></li>
+                            <li><a tabindex="0">Action</a></li>
+                            <li><a tabindex="0">Action</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+            </ul>
+        </nav>
+        <!--<div th:utext="${menuLists}" ></div>-->
+        <br>
+        <div class="card" style="height: 90% ; width: 100%;">
+            <div class="card-body"style="height: 100%; width: 100%;" >
+                <iframe id="ifmMain" th:src="@{/welcome}" frameborder="0" style="height: 100%; width: 100%;"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

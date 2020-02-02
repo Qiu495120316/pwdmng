@@ -10,6 +10,7 @@
     <script type="text/javascript" th:src="@{/lib/jQuery/jquery.md5.js}"></script>
     <script type="text/javascript" th:src="@{/lib/bootstrap-4.3.1-dist/js/bootstrap.js}"></script>
     <script type="text/javascript" th:src="@{/lib/bootoast-master/dist/bootoast.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Base.js}"></script>
     <script type="text/javascript">
 
         var localhostPath = getLocalhostPath();
@@ -31,7 +32,7 @@
         function doSubmit(){
             var dto = {
                 loginName: $.trim( $('#txtLoginName').val() ) ,
-                password:  $.md5( $('#txtPassword').val() ) ,
+                password:  $.md5( $('#txtPassword').val() )
             };
             $.ajax({
                 url: localhostPath+ '/user/login',
@@ -43,6 +44,15 @@
                     var data = JSON.parse( result );
                     showToast( data.status , data.message );
                     if( "101" == data.status ){
+                            /*if( $("#cbRememberPwd").is(':checked') ){
+                                $.cookie("loginCookie", "true", { expires: 7 }); //存储一个带7天期限的cookie
+                                $.cookie("username", dto.loginName, { expires: 7 });
+                                $.cookie("password", dto.password, { expires: 7 });
+                            }else{
+                                $.cookie("loginCookie", "false", { expire: -1 });
+                                $.cookie("username", "", { expires: -1 });
+                                $.cookie("password", "", { expires: -1 });
+                            }*/
                             setTimeout( function () {
                                 window.location.href = "/home";
                         }, 500 );
@@ -59,12 +69,7 @@
             });
         }
 
-        function getLocalhostPath(){
-            var curWwwPath = window.document.location.href;
-            var pathname= window.document.location.pathname;
-            var pos = curWwwPath.indexOf(pathname);
-            return curWwwPath .substring(0,pos);
-        }
+
 
          function showToast( status, message ){
             var alertCls = "alert alert-primary";
@@ -127,6 +132,7 @@
                                                type="text"
                                                class="form-control"
                                                name="loginName"
+                                               value="qzj"
                                                tabindex="1"
                                                 maxlength="15">
                                         <div class="input-group-append ">
@@ -141,6 +147,7 @@
                                                type="password"
                                                class="form-control"
                                                name="password"
+                                               value="123456"
                                                tabindex="2"
                                                maxlength="15">
                                         <div class="input-group-append">
@@ -172,7 +179,8 @@
             <div class="row" style="margin-top: 200px;">
                 <div class="col-md-5"></div>
                 <div class="col-md-2" style="text-align:center">
-                    <a href="http://www.beian.miit.gov.cn" style="color: white;text-decoration: underline;">
+                    <a href="http://www.beian.miit.gov.cn"
+                       style="color: white;text-decoration: underline; font-size: 10px;">
                         粤ICP备19077556号-1</a>
                 </div>
                 <div class="col-md-5"></div>

@@ -1,15 +1,11 @@
 package com.zjqiu.pwdmng.controller.home;
 
 
-import com.zjqiu.pwdmng.basic.Resp;
-import com.zjqiu.pwdmng.entity.dto.SearchDto;
 import com.zjqiu.pwdmng.service.MenuService;
-import com.zjqiu.pwdmng.service.UserService;
-import com.zjqiu.pwdmng.utils.JSONUtils;
+import com.zjqiu.pwdmng.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
@@ -23,7 +19,7 @@ public class HomeController{
     @Autowired
     private MenuService menuService;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @RequestMapping(value={"/gotoLogin", "/login" })
     public String gotoLogin(){
@@ -32,7 +28,7 @@ public class HomeController{
 
     @RequestMapping("/home")
     public String home(Map<String ,String>  resultMap){
-        resultMap.put( "menuLists" , menuService.getHomeMenuString() );
+        //resultMap.put( "menuLists" , menuService.getHomeMenuString() );
         return "home";
     }
 

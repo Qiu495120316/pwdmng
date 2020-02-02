@@ -3,7 +3,6 @@ package com.zjqiu.pwdmng.entity.modal;
 import java.util.Date;
 
 public class User {
-
     private Long userId;
 
     private Long userInfo;
@@ -21,16 +20,6 @@ public class User {
     private Date lastUpdateDate;
 
     private String lastUpdatedBy;
-
-/*    public static User instance( User data ){
-        User user = new User();
-        user.userId = data.getUserId();
-        user.userInfo = data.getUserInfo();
-        user.loginName = data.getLoginName();
-        user.isAdmin = data.getIsAdmin();
-        return user;
-    }*/
-
 
     public Long getUserId() {
         return userId;

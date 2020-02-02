@@ -1,0 +1,35 @@
+<loginFilter>
+    <path>
+        <css>css</css>
+        <images>images</images>
+        <js>js</js>
+        <lib>lib</lib>
+        <noval>noval</noval>
+        <sys>sys</sys>
+        <login>user/login</login>
+    </path>
+    <page>
+        <_404>404.html</_404>
+        <_500>500.html</_500>
+        <error>error.html</error>
+        <login>login.html</login>
+        <welcome>welcome.html</welcome>
+    </page>
+
+</loginFilter>
+
+    <!--<path>
+        <css>/css/</css>
+        <images>/images/</images>
+        <js>/js/</js>
+        <lib>/lib/</lib>
+        <noval>/noval/</noval>
+        <sys>/sys/</sys>
+    </path>
+    <page>
+        <_404>/404.html</_404>
+        <_500>/500.html</_500>
+        <error>/error.html</error>
+        <login>/login.html</login>
+        <welcome>/welcome.html</welcome>
+    </page>-->

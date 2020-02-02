@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base th:href="${  #httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() }"/>
+    <title th:text="#{page.title.system}"></title>
+    <link rel="stylesheet"  th:href="@{/lib/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.css}">
+
+    <script type="text/javascript" th:src="@{/lib/jQuery/jQuery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{lib/popper.js/dist/umd/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/bootoast-master/dist/bootoast.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Base.js}"></script>
+
+    <script type="text/javascript">
+
+        var localhostPath = getLocalhostPath();
+
+        $(function (){
+            $.ajax({
+                url: localhostPath+ '/logs/list',
+                method: 'POST',
+                contentType : 'application/json',
+                success: function ( result ) {
+
+                },
+                error : function ( error ) {
+
+                }
+            });
+        })
+
+
+    </script>
+
+</head>
+<body >
+
+  test logs
+
+</body>
+</html>

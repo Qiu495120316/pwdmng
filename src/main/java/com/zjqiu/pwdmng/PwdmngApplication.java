@@ -6,10 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @MapperScan("com.zjqiu.pwdmng.dao")
-@ComponentScan("com.zjqiu.pwdmng.config")
+/*@EnableAspectJAutoProxy(proxyTargetClass=true)*/
 public class PwdmngApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

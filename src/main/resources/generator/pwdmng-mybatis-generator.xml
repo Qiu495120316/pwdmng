@@ -50,7 +50,7 @@
 
 
         <!--生成对应表及类名-->
-       <!-- <table tableName="system_user"
+       <!--<table tableName="system_user"
                domainObjectName="User"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -59,7 +59,7 @@
                selectByExampleQueryId="true">
                 <property name="useActualColumnNames" value="false" />
         </table>-->
-       <!-- <table tableName="system_role"
+        <!--<table tableName="system_role"
                domainObjectName="Role"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -67,8 +67,8 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
-        </table>
-        <table tableName="system_menu"
+        </table>-->
+        <!--<table tableName="system_menu"
                domainObjectName="Menu"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -76,8 +76,8 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
-        </table>
-        <table tableName="system_user_role"
+        </table>-->
+       <!-- <table tableName="system_user_role"
                domainObjectName="UserRole"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -85,8 +85,8 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
-        </table>
-        <table tableName="system_role_menu"
+        </table>-->
+       <table tableName="system_role_menu"
                domainObjectName="RoleMenu"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -95,7 +95,7 @@
                selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
         </table>
--->
+
     </context>
 
 </generatorConfiguration>

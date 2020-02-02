@@ -1,8 +1,11 @@
 package com.zjqiu.pwdmng.dao;
 
+import com.zjqiu.pwdmng.entity.dto.MenuDto;
 import com.zjqiu.pwdmng.entity.modal.Menu;
 import com.zjqiu.pwdmng.entity.modal.MenuExample;
 import java.util.List;
+
+import com.zjqiu.pwdmng.entity.modal.details.MenuDetails;
 import org.apache.ibatis.annotations.Param;
 
 public interface MenuMapper {
@@ -27,4 +30,7 @@ public interface MenuMapper {
     int updateByPrimaryKeySelective(Menu record);
 
     int updateByPrimaryKey(Menu record);
+
+    /*自定义方法*/
+    List<MenuDetails> findMenuDetails(@Param("dto") MenuDto dto);
 }
